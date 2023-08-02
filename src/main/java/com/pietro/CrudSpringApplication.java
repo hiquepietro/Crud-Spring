@@ -21,7 +21,7 @@ public class CrudSpringApplication {
 
 			Curso c = new Curso();
 			c.setNome("ANGULAR COM SPRING BOOT");
-			c.setCategoria("Frontend");
+			c.setCategoria("Front-end");
 
 			cursoRepository.save(c);
 		};
