@@ -14,7 +14,8 @@ public class CursoMapper {
         if (curso == null) {
             return null;
         }
-        return new CursoDTO(curso.getId(), curso.getNome(),curso.getCategoria().getValue());
+        return new CursoDTO(curso.getId(), curso.getNome(),curso.getCategoria().getValue(),
+                curso.getAulas());
 
     }
 
@@ -33,14 +34,14 @@ public class CursoMapper {
         return curso;
     }
 
-    public Categoria convertCategoriaValue(String categoria){
-        if (categoria == null) {
+    public Categoria convertCategoriaValue(String value){
+        if (value == null) {
             return null;
         }
-        return switch (categoria) {
+        return switch (value) {
             case "Front-end" -> Categoria.FRONT_END;
             case "Back-end" -> Categoria.BACK_END;
-            default -> throw new IllegalArgumentException("Categoria invalida : " + categoria);
+            default -> throw new IllegalArgumentException("Categoria invalida : " + value);
         };
     }
 }

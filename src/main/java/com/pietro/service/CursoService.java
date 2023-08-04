@@ -3,6 +3,7 @@ package com.pietro.service;
 import com.pietro.dto.CursoDTO;
 import com.pietro.dto.mapper.CursoMapper;
 import com.pietro.exception.RegistroNaoEncontrado;
+import com.pietro.model.Curso;
 import com.pietro.repository.CursoRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -12,8 +13,8 @@ import org.springframework.validation.annotation.Validated;
 
 
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Validated
@@ -33,7 +34,7 @@ public class CursoService {
         return cursoRepository.findAll()
                 .stream()
                 .map(cursoMapper::toDTO)
-                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+                .collect(Collectors.toList());
     }
 
     public CursoDTO findById( @NotNull @Positive Long id){
@@ -45,11 +46,12 @@ public class CursoService {
         return cursoMapper.toDTO(cursoRepository.save(cursoMapper.toEntity(curso)));
     }
 
-    public CursoDTO update(@NotNull @Positive Long id, @Valid @NotNull CursoDTO curso){
+    public CursoDTO update(@NotNull @Positive Long id, @Valid @NotNull CursoDTO cursoDTO){
         return cursoRepository.findById(id)
                 .map(recordFound -> {
-                recordFound.setNome(curso.nome());
-                recordFound.setCategoria(this.cursoMapper.convertCategoriaValue(curso.categoria()));
+                    Curso curso = cursoMapper.toEntity(cursoDTO);
+                recordFound.setNome(cursoDTO.nome());
+                recordFound.setCategoria(this.cursoMapper.convertCategoriaValue(cursoDTO.categoria()));
                 return cursoMapper.toDTO(cursoRepository.save(recordFound));
         }).orElseThrow(() -> new RegistroNaoEncontrado(id));
     }

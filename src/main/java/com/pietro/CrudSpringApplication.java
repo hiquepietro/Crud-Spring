@@ -1,6 +1,7 @@
 package com.pietro;
 
 import com.pietro.enums.Categoria;
+import com.pietro.model.Aula;
 import com.pietro.model.Curso;
 import com.pietro.repository.CursoRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -24,8 +25,15 @@ public class CrudSpringApplication {
 			c.setNome("ANGULAR COM SPRING BOOT");
 			c.setCategoria(Categoria.FRONT_END);
 
+
+			Aula l = new Aula();
+			l.setNome("Aula 1");
+			l.setYoutubeUrl("watch?v=1");
+			l.setCurso(c);
+			c.getAulas().add(l);
+
+
 			cursoRepository.save(c);
 		};
-
 	}
 }

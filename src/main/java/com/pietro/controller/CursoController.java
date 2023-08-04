@@ -26,7 +26,7 @@ import java.util.List;
 
 
 
-
+@CrossOrigin(origins = "*")
 @Validated
 @RestController
 @RequestMapping("/api/cursos")
@@ -36,7 +36,6 @@ public class CursoController {
     private final CursoService cursoService;
 
     public CursoController( CursoService cursoService) {
-
         this.cursoService = cursoService;
     }
 
@@ -53,9 +52,7 @@ public class CursoController {
     }
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:4200")
     public CursoDTO  create(@RequestBody @Valid @NotNull CursoDTO curso) {
-        System.out.println(curso);;
         return cursoService.create(curso);
    }
    @PutMapping("/{id}")
